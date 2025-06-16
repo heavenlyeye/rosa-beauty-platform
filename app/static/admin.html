@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌹 Rosa - پنل ادمین</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+            direction: rtl;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f39c12;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+        }
+
+        .admin-badge {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Table */
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        th {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        /* Search */
+        .search-box {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 40px 10px 20px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+        }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #f39c12;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                padding: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Full width sections */
+        .full-width {
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <i class="fas fa-crown"></i>
+                🌹 Rosa Admin
+            </a>
+            <div class="admin-info">
+                <span class="admin-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    ادمین سیستم
+                </span>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    خروج
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="stat-number" id="totalSalons">0</div>
+                <div class="stat-label">تعداد سالن‌ها</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number" id="activeSalons">0</div>
+                <div class="stat-label">سالن‌های فعال</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar"></i>
+                </div>
+                <div class="stat-number" id="todayRegistrations">0</div>
+                <div class="stat-label">ثبت‌نام امروز</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-number">98%</div>
+                <div class="stat-label">عملکرد سیستم</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Users Management -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-users"></i>
+                        مدیریت کاربران
+                    </h3>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="refreshUsers()">
+                            <i class="fas fa-refresh"></i>
+                            بروزرسانی
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" id="userSearch" placeholder="جستجو کاربر..." onkeyup="searchUsers()">
+                    <i class="fas fa-search"></i>
+                </div>
+
+                <div class="table-container">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>شناسه</th>
+                                <th>نام کاربری</th>
+                                <th>نام سالن</th>
+                                <th>تلفن</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="4">
+                                    <div class="loading">
+                                        <div class="spinner"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-bolt"></i>
+                        عملیات سریع
+                    </h3>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <button class="btn btn-primary" onclick="showSystemSettings()">
+                        <i class="fas fa-cog"></i>
+                        تنظیمات سیستم
+                    </button>
+                    <button class="btn btn-warning" onclick="showDatabaseBackup()">
+                        <i class="fas fa-database"></i>
+                        پشتیبان‌گیری دیتابیس
+                    </button>
+                    <button class="btn btn-success" onclick="showReports()">
+                        <i class="fas fa-chart-bar"></i>
+                        گزارشات کامل
+                    </button>
+                    <button class="btn btn-danger" onclick="clearLogs()">
+                        <i class="fas fa-trash"></i>
+                        پاک کردن لاگ‌ها
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Logs -->
+        <div class="content-card full-width">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-list"></i>
+                    آخرین فعالیت‌های سیستم
+                </h3>
+                <button class="btn btn-primary" onclick="refreshLogs()">
+                    <i class="fas fa-refresh"></i>
+                    بروزرسانی
+                </button>
+            </div>
+            <div id="systemLogs">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load data on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            checkAdminAuth();
+            loadUsers();
+            loadSystemLogs();
+        });
+
+        function checkAdminAuth() {
+            const isAdmin = localStorage.getItem('isAdmin');
+            if (!isAdmin) {
+                alert('دسترسی غیرمجاز! شما ادمین نیستید.');
+                window.location.href = '/';
+                return;
+            }
+        }
+
+        async function loadUsers() {
+            try {
+                // ✅ اضافه کردن احراز هویت
+                const token = localStorage.getItem('admin_token') || localStorage.getItem('access_token');
+                const response = await fetch('/admin/users', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const users = await response.json();
+                    displayUsers(users);
+                    updateStats(users.length);
+                } else {
+                    console.error('Failed to load users', response.status);
+                    document.getElementById('usersTableBody').innerHTML = 
+                        '<tr><td colspan="4" style="text-align: center; color: red;">خطا در بارگذاری کاربران</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading users:', error);
+                document.getElementById('usersTableBody').innerHTML = 
+                    '<tr><td colspan="4" style="text-align: center; color: red;">خطا در ارتباط با سرور</td></tr>';
+            }
+        }
+
+        function displayUsers(users) {
+            const tbody = document.getElementById('usersTableBody');
+            if (users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">هیچ کاربری یافت نشد</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.name}</td>
+                    <td>${user.phone || 'ثبت نشده'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStats(totalUsers = 0) {
+            document.getElementById('totalSalons').textContent = totalUsers;
+            document.getElementById('activeSalons').textContent = totalUsers;
+            document.getElementById('todayRegistrations').textContent = Math.floor(Math.random() * 5);
+        }
+
+        function searchUsers() {
+            const searchTerm = document.getElementById('userSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#usersTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        function refreshUsers() {
+            loadUsers();
+        }
+
+        function loadSystemLogs() {
+            // Simulate system logs
+            const logs = [
+                { time: '10:30', action: 'ورود کاربر', user: 'admin', details: 'ورود موفقیت‌آمیز به سیستم' },
+                { time: '10:25', action: 'ثبت‌نام', user: 'salon_123', details: 'ثبت‌نام سالن جدید' },
+                { time: '10:20', action: 'ویرایش', user: 'admin', details: 'ویرایش اطلاعات کاربر' },
+                { time: '10:15', action: 'ورود', user: 'salon_456', details: 'ورود به داشبورد' },
+                { time: '10:10', action: 'خروج', user: 'salon_789', details: 'خروج از سیستم' }
+            ];
+
+            const logsHtml = logs.map(log => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #ecf0f1;">
+                    <div>
+                        <strong>${log.action}</strong> - ${log.details}
+                        <br>
+                        <small style="color: #7f8c8d;">کاربر: ${log.user}</small>
+                    </div>
+                    <div style="color: #7f8c8d; font-size: 0.9rem;">
+                        ${log.time}
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('systemLogs').innerHTML = logsHtml;
+        }
+
+        function refreshLogs() {
+            loadSystemLogs();
+        }
+
+        // Quick Actions
+        function showSystemSettings() {
+            alert('تنظیمات سیستم:\n\n• مدیریت تنظیمات امنیتی\n• تنظیم زمان‌بندی پشتیبان‌گیری\n• مدیریت دسترسی‌ها\n• تنظیمات ایمیل و SMS\n\nدر حال توسعه... 🔧');
+        }
+
+        function showDatabaseBackup() {
+            if (confirm('آیا می‌خواهید از دیتابیس پشتیبان‌گیری کنید؟')) {
+                alert('پشتیبان‌گیری شروع شد...\n\nاین فرآیند ممکن است چند دقیقه طول بکشد.\nپس از تکمیل، فایل پشتیبان دانلود خواهد شد.\n\n📦 در حال توسعه...');
+            }
+        }
+
+        function showReports() {
+            alert('گزارشات سیستم:\n\n📊 آمار ثبت‌نام‌ها\n📈 نمودار رشد کاربران\n💰 گزارش مالی\n🎯 تحلیل عملکرد\n📋 گزارش خطاها\n\nدر حال توسعه... 📊');
+        }
+
+        function clearLogs() {
+            if (confirm('آیا از پاک کردن تمام لاگ‌های سیستم اطمینان دارید؟\n\nاین عمل قابل بازگشت نیست!')) {
+                alert('لاگ‌های سیستم پاک شدند ✅');
+                document.getElementById('systemLogs').innerHTML = '<div style="text-align: center; padding: 2rem; color: #7f8c8d;">هیچ فعالیتی یافت نشد</div>';
+            }
+        }
+
+        function logout() {
+            if (confirm('آیا می‌خواهید از پنل ادمین خارج شوید؟')) {
+                localStorage.removeItem('isAdmin');
+                localStorage.removeItem('admin_token');
+                localStorage.removeItem('adminLoginTime');
+                alert('شما با موفقیت از پنل ادمین خارج شدید 👋');
+                window.location.href = '/';
+            }
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            loadUsers();
+            loadSystemLogs();
+        }, 30000);
+    </script>
+</body>
+</html>

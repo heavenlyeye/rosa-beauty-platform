@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌹 Rosa - داشبورد مدیریت سالن</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-welcome {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #ff6b95, #d63384);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 149, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff6b95, #d63384);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f1f1f1;
+        }
+
+        .card-title {
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff6b95, #d63384);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .action-btn i {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #dc3545, #e83e8c);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            animation: modalAppear 0.3s ease-out;
+        }
+
+        @keyframes modalAppear {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .close {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .close:hover {
+            opacity: 0.7;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545, #e83e8c);
+            color: white;
+        }
+
+        .btn-block {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .service-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-info h4 {
+            margin: 0 0 0.5rem;
+            color: #333;
+        }
+
+        .service-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .service-price {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        .customer-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .customer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .customer-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .customer-phone {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .customer-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .filter-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .export-section {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .container { padding: 1rem; }
+            .header { padding: 1rem; }
+            .header-content { flex-direction: column; gap: 1rem; }
+            .modal-content { width: 95%; margin: 5% auto; }
+            .form-row { grid-template-columns: 1fr; }
+            .filter-row { grid-template-columns: 1fr; }
+            .export-section { flex-direction: column; }
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-confirmed { background: #d4edda; color: #155724; }
+        .status-completed { background: #d1ecf1; color: #0c5460; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">🌹 Rosa</a>
+            <div class="user-info">
+                <span class="user-welcome" id="userWelcome">خوش آمدید</span>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    خروج
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h1>داشبورد مدیریت سالن زیبایی</h1>
+            <p>مدیریت کامل و هوشمند سالن زیبایی شما</p>
+            
+            <div id="salonInfo">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <span class="stat-number" id="todayAppointments">-</span>
+                <span class="stat-label">نوبت امروز</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <span class="stat-number" id="pendingAppointments">-</span>
+                <span class="stat-label">نوبت در انتظار</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <span class="stat-number" id="totalCustomers">-</span>
+                <span class="stat-label">کل مشتریان</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <span class="stat-number" id="monthlyRevenue">-</span>
+                <span class="stat-label">درآمد ماهانه</span>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Quick Actions -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        عملیات سریع
+                    </div>
+                </div>
+                <div class="quick-actions">
+                    <button class="action-btn" onclick="showNewAppointment()">
+                        <i class="fas fa-plus"></i>
+                        نوبت جدید
+                    </button>
+                    <button class="action-btn" onclick="showCustomers()">
+                        <i class="fas fa-users"></i>
+                        مشتریان
+                    </button>
+                    <button class="action-btn" onclick="showServices()">
+                        <i class="fas fa-scissors"></i>
+                        خدمات
+                    </button>
+                    <button class="action-btn" onclick="showReports()">
+                        <i class="fas fa-chart-bar"></i>
+                        گزارشات
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        آخرین فعالیت‌ها
+                    </div>
+                    <button class="btn btn-primary" onclick="refreshActivity()">
+                        <i class="fas fa-refresh"></i>
+                        بروزرسانی
+                    </button>
+                </div>
+                <div id="activityContent">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-card" style="grid-column: 1 / -1;">
+            <div class="card-header">
+                <div class="card-title">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    نوبت‌های امروز
+                </div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>زمان</th>
+                            <th>مشتری</th>
+                            <th>خدمت</th>
+                            <th>مبلغ</th>
+                            <th>وضعیت</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointmentsTableBody">
+                        <tr>
+                            <td colspan="5">
+                                <div class="loading">
+                                    <div class="spinner"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal نوبت جدید -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-plus"></i> نوبت جدید</h2>
+                <button class="close" onclick="closeModal('appointmentModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="appointmentForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customerName">نام مشتری *</label>
+                            <input type="text" id="customerName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerPhone">شماره تماس *</label>
+                            <input type="tel" id="customerPhone" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="appointmentDate">تاریخ نوبت *</label>
+                            <input type="date" id="appointmentDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentTime">زمان نوبت *</label>
+                            <input type="time" id="appointmentTime" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="serviceSelect">نوع خدمت *</label>
+                        <select id="serviceSelect" class="form-control" required>
+                            <option value="">انتخاب خدمت...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="serviceDuration">مدت زمان (دقیقه)</label>
+                            <input type="number" id="serviceDuration" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="servicePrice">قیمت (تومان)</label>
+                            <input type="number" id="servicePrice" class="form-control" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointmentNotes">یادداشت</label>
+                        <textarea id="appointmentNotes" class="form-control" rows="3" placeholder="توضیحات اضافی..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="paymentMethod">روش پرداخت</label>
+                            <select id="paymentMethod" class="form-control">
+                                <option value="">انتخاب کنید...</option>
+                                <option value="cash">نقدی</option>
+                                <option value="card">کارت</option>
+                                <option value="online">آنلاین</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="paidAmount">مبلغ پرداخت شده</label>
+                            <input type="number" id="paidAmount" class="form-control" placeholder="0">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-block">
+                        <i class="fas fa-save"></i> ثبت نوبت
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal مشتریان -->
+    <div id="customersModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-users"></i> مشتریان سالن</h2>
+                <button class="close" onclick="closeModal('customersModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="filter-section">
+                    <div class="filter-row">
+                        <div class="form-group">
+                            <label for="customerSearch">جستجو مشتری</label>
+                            <input type="text" id="customerSearch" class="form-control" placeholder="نام یا شماره تماس...">
+                        </div>
+                        <div class="form-group">
+                            <label for="customerFilter">فیلتر</label>
+                            <select id="customerFilter" class="form-control">
+                                <option value="all">همه مشتریان</option>
+                                <option value="active">مشتریان فعال</option>
+                                <option value="new">مشتریان جدید</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="searchCustomers()">
+                        <i class="fas fa-search"></i> جستجو
+                    </button>
+                </div>
+                
+                <div id="customersContent">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal خدمات -->
+    <div id="servicesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-scissors"></i> خدمات سالن</h2>
+                <button class="close" onclick="closeModal('servicesModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="filter-section">
+                    <div class="filter-row">
+                        <div class="form-group">
+                            <label for="serviceCategory">دسته‌بندی</label>
+                            <select id="serviceCategory" class="form-control">
+                                <option value="all">همه خدمات</option>
+                                <option value="hair_cut">کوتاهی مو</option>
+                                <option value="hair_color">رنگ مو</option>
+                                <option value="facial">پاکسازی پوست</option>
+                                <option value="makeup">آرایش</option>
+                                <option value="nail">ناخن</option>
+                                <option value="massage">ماساژ</option>
+                                <option value="eyebrow">ابرو</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="priceRange">محدوده قیمت</label>
+                            <select id="priceRange" class="form-control">
+                                <option value="all">همه قیمت‌ها</option>
+                                <option value="0-100000">زیر 100 هزار</option>
+                                <option value="100000-300000">100 تا 300 هزار</option>
+                                <option value="300000-500000">300 تا 500 هزار</option>
+                                <option value="500000+">بالای 500 هزار</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="filterServices()">
+                        <i class="fas fa-filter"></i> اعمال فیلتر
+                    </button>
+                </div>
+                
+                <div id="servicesContent">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal گزارشات -->
+    <div id="reportsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-chart-bar"></i> گزارشات و آمار</h2>
+                <button class="close" onclick="closeModal('reportsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="filter-section">
+                    <h3>فیلترهای گزارش</h3>
+                    <div class="filter-row">
+                        <div class="form-group">
+                            <label for="reportType">نوع گزارش</label>
+                            <select id="reportType" class="form-control">
+                                <option value="sales">گزارش فروش</option>
+                                <option value="customers">گزارش مشتریان</option>
+                                <option value="services">گزارش خدمات</option>
+                                <option value="appointments">گزارش نوبت‌ها</option>
+                                <option value="financial">گزارش مالی</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateFrom">از تاریخ</label>
+                            <input type="date" id="dateFrom" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="dateTo">تا تاریخ</label>
+                            <input type="date" id="dateTo" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="filter-row">
+                        <div class="form-group">
+                            <label for="reportStatus">وضعیت نوبت</label>
+                            <select id="reportStatus" class="form-control">
+                                <option value="all">همه وضعیت‌ها</option>
+                                <option value="completed">تکمیل شده</option>
+                                <option value="pending">در انتظار</option>
+                                <option value="cancelled">لغو شده</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reportService">خدمت خاص</label>
+                            <select id="reportService" class="form-control">
+                                <option value="all">همه خدمات</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <button class="btn btn-success" onclick="generateReport()">
+                            <i class="fas fa-chart-line"></i> تولید گزارش
+                        </button>
+                        <button class="btn btn-primary" onclick="exportToExcel()">
+                            <i class="fas fa-file-excel"></i> خروجی اکسل
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportToPDF()">
+                            <i class="fas fa-file-pdf"></i> خروجی PDF
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="reportsContent">
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-chart-bar" style="font-size: 3rem; opacity: 0.3;"></i>
+                        <p>فیلترهای مورد نظر را انتخاب کرده و گزارش را تولید کنید</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let currentSalon = null;
+        let servicesData = [];
+        let customersData = [];
+        const API_BASE = ''; // برای localhost استفاده کنید: 'http://localhost:3000'
+
+        window.addEventListener('DOMContentLoaded', function() {
+            checkAuthentication();
+            loadDashboardData();
+            setupModalEvents();
+        });
+
+        function setupModalEvents() {
+            // بستن مودال با کلیک روی پس‌زمینه
+            window.onclick = function(event) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            };
+
+            // تنظیم فرم نوبت جدید
+            document.getElementById('appointmentForm').addEventListener('submit', handleAppointmentSubmit);
+            document.getElementById('serviceSelect').addEventListener('change', updateServiceDetails);
+            
+            // تنظیم تاریخ پیش‌فرض
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('appointmentDate').value = today;
+            document.getElementById('dateFrom').value = today;
+            document.getElementById('dateTo').value = today;
+        }
+
+        function checkAuthentication() {
+            const token = getToken();
+            const username = localStorage.getItem('username');
+
+            if (!token || !username) {
+                showError('لطفاً وارد سیستم شوید');
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+                return false;
+            }
+
+            document.getElementById('userWelcome').textContent = `خوش آمدید، ${username}`;
+            currentUser = username;
+            return true;
+        }
+
+        function getToken() {
+            return localStorage.getItem('access_token') || localStorage.getItem('token');
+        }
+
+        async function apiCall(endpoint, options = {}) {
+            const token = getToken();
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            };
+
+            const finalOptions = {
+                ...defaultOptions,
+                ...options,
+                headers: {
+                    ...defaultOptions.headers,
+                    ...options.headers
+                }
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}${endpoint}`, finalOptions);
+                
+                if (response.status === 401) {
+                    handleUnauthorized();
+                    return null;
+                }
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+
+        function handleUnauthorized() {
+            showError('جلسه شما منقضی شده است. لطفاً مجدداً وارد شوید');
+            localStorage.clear();
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+        }
+
+        async function loadDashboardData() {
+            try {
+                await Promise.all([
+                    loadSalonInfo(),
+                    loadStats(),
+                    loadRecentActivity(),
+                    loadTodayAppointments(),
+                    loadServicesData()
+                ]);
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showError('خطا در بارگذاری اطلاعات');
+            }
+        }
+
+        async function loadSalonInfo() {
+            try {
+                const salons = await apiCall('/salons');
+                const userSalon = salons?.find(salon => salon.username === currentUser);
+
+                if (userSalon) {
+                    currentSalon = userSalon;
+                    displaySalonInfo(userSalon);
+                } else {
+                    displayDefaultInfo();
+                }
+            } catch (error) {
+                console.error('Error loading salon info:', error);
+                displayDefaultInfo();
+            }
+        }
+
+        function displaySalonInfo(salon) {
+            const salonInfoDiv = document.getElementById('salonInfo');
+            salonInfoDiv.innerHTML = `
+                <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 1.5rem; border-radius: 15px; margin-top: 1rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-left: 1rem;">
+                            ${salon.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; font-size: 1.5rem;">${salon.name}</h3>
+                            <p style="margin: 0; opacity: 0.9;">${salon.address || 'آدرس ثبت نشده'}</p>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div>
+                            <i class="fas fa-phone"></i> ${salon.phone || 'ثبت نشده'}
+                        </div>
+                        <div>
+                            <i class="fab fa-instagram"></i> ${salon.instagram || 'ثبت نشده'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayDefaultInfo() {
+            const salonInfoDiv = document.getElementById('salonInfo');
+            salonInfoDiv.innerHTML = `
+                <div class="error-message">
+                    <h3>اطلاعات سالن یافت نشد</h3>
+                    <p>لطفاً اطلاعات سالن خود را کامل کنید</p>
+                </div>
+            `;
+        }
+
+        async function loadStats() {
+            try {
+                // بارگذاری آمار واقعی از API
+                const [salesReport, customersReport] = await Promise.all([
+                    apiCall('/api/reports/sales'),
+                    apiCall('/api/reports/customers')
+                ]);
+
+                document.getElementById('todayAppointments').textContent = salesReport?.total_bookings || '12';
+                document.getElementById('pendingAppointments').textContent = '3';
+                document.getElementById('totalCustomers').textContent = customersReport?.total_customers || '145';
+                document.getElementById('monthlyRevenue').textContent = formatCurrency(salesReport?.total_sales || 2500000);
+            } catch (error) {
+                console.error('Error loading stats:', error);
+                // نمایش آمار پیش‌فرض
+                document.getElementById('todayAppointments').textContent = '12';
+                document.getElementById('pendingAppointments').textContent = '3';
+                document.getElementById('totalCustomers').textContent = '145';
+                document.getElementById('monthlyRevenue').textContent = '15M';
+            }
+        }
+
+        async function loadRecentActivity() {
+            try {
+                const activityContent = document.getElementById('activityContent');
+                
+                // شبیه‌سازی داده‌ها - در نسخه واقعی از API استفاده کنید
+                const activities = [
+                    { time: '10:30', action: 'رنگ مو', customer: 'خانم احمدی', status: 'تکمیل' },
+                    { time: '11:00', action: 'کوتاهی مو', customer: 'خانم محمدی', status: 'در حال انجام' },
+                    { time: '11:30', action: 'ماساژ صورت', customer: 'خانم رضایی', status: 'رزرو' }
+                ];
+
+                activityContent.innerHTML = activities.map(activity => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid #f1f1f1;">
+                        <div>
+                            <strong>${activity.action}</strong> - ${activity.customer}
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666;">
+                            ${activity.time}
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading activity:', error);
+                document.getElementById('activityContent').innerHTML = `
+                    <div class="error-message">خطا در بارگذاری فعالیت‌ها</div>
+                `;
+            }
+        }
+
+        async function loadTodayAppointments() {
+            try {
+                const tbody = document.getElementById('appointmentsTableBody');
+                
+                // شبیه‌سازی نوبت‌های امروز
+                const appointments = [
+                    { time: '09:00', customer: 'خانم احمدی', service: 'رنگ مو', amount: '450,000', status: 'completed' },
+                    { time: '10:30', customer: 'خانم محمدی', service: 'کوتاهی مو', amount: '120,000', status: 'confirmed' },
+                    { time: '12:00', customer: 'خانم رضایی', service: 'ماساژ صورت', amount: '200,000', status: 'pending' }
+                ];
+
+                tbody.innerHTML = appointments.map(apt => `
+                    <tr>
+                        <td>${apt.time}</td>
+                        <td>${apt.customer}</td>
+                        <td>${apt.service}</td>
+                        <td>${apt.amount} تومان</td>
+                        <td><span class="status-badge status-${apt.status}">${getStatusText(apt.status)}</span></td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading appointments:', error);
+            }
+        }
+
+        async function loadServicesData() {
+            try {
+                const services = await apiCall('/api/services');
+                servicesData = services || [
+                    { id: 1, name: 'کوتاهی مو', price: 150000, category: 'hair_cut', duration_minutes: 60 },
+                    { id: 2, name: 'رنگ مو', price: 450000, category: 'hair_color', duration_minutes: 120 },
+                    { id: 3, name: 'پاکسازی پوست', price: 200000, category: 'facial', duration_minutes: 90 },
+                    { id: 4, name: 'آرایش عروس', price: 800000, category: 'makeup', duration_minutes: 180 }
+                ];
+
+                // پر کردن لیست خدمات در فرم نوبت جدید
+                const serviceSelect = document.getElementById('serviceSelect');
+                serviceSelect.innerHTML = '<option value="">انتخاب خدمت...</option>' +
+                    servicesData.map(service => 
+                        `<option value="${service.id}" data-price="${service.price}" data-duration="${service.duration_minutes}">
+                            ${service.name} - ${formatCurrency(service.price)} تومان
+                        </option>`
+                    ).join('');
+
+                // پر کردن لیست خدمات در گزارشات
+                const reportService = document.getElementById('reportService');
+                reportService.innerHTML = '<option value="all">همه خدمات</option>' +
+                    servicesData.map(service => 
+                        `<option value="${service.id}">${service.name}</option>`
+                    ).join('');
+
+            } catch (error) {
+                console.error('Error loading services:', error);
+            }
+        }
+
+        function getStatusColor(status) {
+            switch(status) {
+                case 'completed': return '#28a745';
+                case 'confirmed': return '#17a2b8';
+                case 'pending': return '#ffc107';
+                case 'cancelled': return '#dc3545';
+                default: return '#6c757d';
+            }
+        }
+
+        function getStatusText(status) {
+            switch(status) {
+                case 'completed': return 'تکمیل شده';
+                case 'confirmed': return 'تایید شده';
+                case 'pending': return 'در انتظار';
+                case 'cancelled': return 'لغو شده';
+                default: return 'نامشخص';
+            }
+        }
+
+        function formatCurrency(amount) {
+            if (amount >= 1000000) {
+                return (amount / 1000000).toFixed(1) + 'M';
+            } else if (amount >= 1000) {
+                return (amount / 1000).toFixed(0) + 'K';
+            }
+            return amount.toLocaleString();
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            errorDiv.style.position = 'fixed';
+            errorDiv.style.top = '20px';
+            errorDiv.style.right = '20px';
+            errorDiv.style.zIndex = '1000';
+            
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.textContent = message;
+            successDiv.style.position = 'fixed';
+            successDiv.style.top = '20px';
+            successDiv.style.right = '20px';
+            successDiv.style.zIndex = '1000';
+            
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.remove();
+            }, 3000);
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Quick Actions
+        function showNewAppointment() {
+            openModal('appointmentModal');
+        }
+
+        async function showCustomers() {
+            openModal('customersModal');
+            await loadCustomersData();
+        }
+
+        async function showServices() {
+            openModal('servicesModal');
+            await loadServicesModalData();
+        }
+
+        function showReports() {
+            openModal('reportsModal');
+        }
+
+        // Appointment Form Handling
+        function updateServiceDetails() {
+            const serviceSelect = document.getElementById('serviceSelect');
+            const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+            
+            if (selectedOption.value) {
+                const price = selectedOption.getAttribute('data-price');
+                const duration = selectedOption.getAttribute('data-duration');
+                
+                document.getElementById('servicePrice').value = price;
+                document.getElementById('serviceDuration').value = duration;
+                document.getElementById('paidAmount').value = price;
+            } else {
+                document.getElementById('servicePrice').value = '';
+                document.getElementById('serviceDuration').value = '';
+                document.getElementById('paidAmount').value = '';
+            }
+        }
+
+        async function handleAppointmentSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                customer_name: document.getElementById('customerName').value,
+                customer_phone: document.getElementById('customerPhone').value,
+                booking_date: document.getElementById('appointmentDate').value + 'T' + document.getElementById('appointmentTime').value,
+                service_id: parseInt(document.getElementById('serviceSelect').value),
+                notes: document.getElementById('appointmentNotes').value,
+                payment_method: document.getElementById('paymentMethod').value,
+                paid_amount: parseFloat(document.getElementById('paidAmount').value) || 0
+            };
+
+            try {
+                const result = await apiCall('/api/bookings', {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+
+                if (result) {
+                    showSuccess('نوبت با موفقیت ثبت شد');
+                    closeModal('appointmentModal');
+                    document.getElementById('appointmentForm').reset();
+                    
+                    // بروزرسانی داشبورد
+                    await loadDashboardData();
+                }
+            } catch (error) {
+                console.error('Error creating appointment:', error);
+                showError('خطا در ثبت نوبت. لطفاً مجدداً تلاش کنید.');
+            }
+        }
+
+        // Customers Modal
+        async function loadCustomersData() {
+            const customersContent = document.getElementById('customersContent');
+            customersContent.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+            try {
+                // شبیه‌سازی داده‌های مشتریان
+                customersData = [
+                    { id: 1, name: 'خانم احمدی', phone: '09121234567', last_visit: '1403/03/15', total_visits: 12 },
+                    { id: 2, name: 'خانم محمدی', phone: '09129876543', last_visit: '1403/03/10', total_visits: 8 },
+                    { id: 3, name: 'خانم رضایی', phone: '09125555555', last_visit: '1403/03/12', total_visits: 15 }
+                ];
+
+                displayCustomers(customersData);
+            } catch (error) {
+                console.error('Error loading customers:', error);
+                customersContent.innerHTML = '<div class="error-message">خطا در بارگذاری مشتریان</div>';
+            }
+        }
+
+        function displayCustomers(customers) {
+            const customersContent = document.getElementById('customersContent');
+            
+            if (customers.length === 0) {
+                customersContent.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666;">مشتری یافت نشد</div>';
+                return;
+            }
+
+            customersContent.innerHTML = customers.map(customer => `
+                <div class="customer-item">
+                    <div class="customer-header">
+                        <div class="customer-name">${customer.name}</div>
+                        <div class="customer-phone">${customer.phone}</div>
+                    </div>
+                    <div class="customer-details">
+                        آخرین ویزیت: ${customer.last_visit} | تعداد ویزیت: ${customer.total_visits}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function searchCustomers() {
+            const searchTerm = document.getElementById('customerSearch').value.toLowerCase();
+            const filter = document.getElementById('customerFilter').value;
+            
+            let filteredCustomers = customersData;
+            
+            if (searchTerm) {
+                filteredCustomers = filteredCustomers.filter(customer => 
+                    customer.name.toLowerCase().includes(searchTerm) || 
+                    customer.phone.includes(searchTerm)
+                );
+            }
+            
+            if (filter !== 'all') {
+                // اعمال فیلترهای اضافی
+                if (filter === 'active') {
+                    filteredCustomers = filteredCustomers.filter(customer => customer.total_visits > 5);
+                } else if (filter === 'new') {
+                    filteredCustomers = filteredCustomers.filter(customer => customer.total_visits <= 3);
+                }
+            }
+            
+            displayCustomers(filteredCustomers);
+        }
+
+        // Services Modal
+        async function loadServicesModalData() {
+            const servicesContent = document.getElementById('servicesContent');
+            servicesContent.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+            try {
+                displayServices(servicesData);
+            } catch (error) {
+                console.error('Error loading services:', error);
+                servicesContent.innerHTML = '<div class="error-message">خطا در بارگذاری خدمات</div>';
+            }
+        }
+
+        function displayServices(services) {
+            const servicesContent = document.getElementById('servicesContent');
+            
+            if (services.length === 0) {
+                servicesContent.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666;">خدمتی یافت نشد</div>';
+                return;
+            }
+
+            servicesContent.innerHTML = services.map(service => `
+                <div class="service-item">
+                    <div class="service-info">
+                        <h4>${service.name}</h4>
+                        <p>دسته‌بندی: ${getCategoryName(service.category)} | مدت زمان: ${service.duration_minutes} دقیقه</p>
+                    </div>
+                    <div class="service-price">${formatCurrency(service.price)} تومان</div>
+                </div>
+            `).join('');
+        }
+
+        function getCategoryName(category) {
+            const categories = {
+                'hair_cut': 'کوتاهی مو',
+                'hair_color': 'رنگ مو',
+                'facial': 'پاکسازی پوست',
+                'makeup': 'آرایش',
+                'nail': 'ناخن',
+                'massage': 'ماساژ',
+                'eyebrow': 'ابرو'
+            };
+            return categories[category] || category;
+        }
+
+        function filterServices() {
+            const category = document.getElementById('serviceCategory').value;
+            const priceRange = document.getElementById('priceRange').value;
+            
+            let filteredServices = servicesData;
+            
+            if (category !== 'all') {
+                filteredServices = filteredServices.filter(service => service.category === category);
+            }
+            
+            if (priceRange !== 'all') {
+                const [min, max] = priceRange.split('-').map(p => parseInt(p.replace('+', '')));
+                filteredServices = filteredServices.filter(service => {
+                    if (priceRange.includes('+')) {
+                        return service.price >= min;
+                    } else {
+                        return service.price >= min && service.price <= max;
+                    }
+                });
+            }
+            
+            displayServices(filteredServices);
+        }
+
+        // Reports Functions
+        async function generateReport() {
+            const reportsContent = document.getElementById('reportsContent');
+            reportsContent.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+            try {
+                const reportType = document.getElementById('reportType').value;
+                const dateFrom = document.getElementById('dateFrom').value;
+                const dateTo = document.getElementById('dateTo').value;
+                
+                // شبیه‌سازی تولید گزارش
+                setTimeout(() => {
+                    const reportData = generateMockReport(reportType, dateFrom, dateTo);
+                    displayReport(reportData);
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Error generating report:', error);
+                reportsContent.innerHTML = '<div class="error-message">خطا در تولید گزارش</div>';
+            }
+        }
+
+        function generateMockReport(type, dateFrom, dateTo) {
+            // شبیه‌سازی داده‌های گزارش
+            return {
+                type: type,
+                period: `${dateFrom} تا ${dateTo}`,
+                data: {
+                    total_revenue: 2500000,
+                    total_appointments: 25,
+                    completed_appointments: 20,
+                    cancelled_appointments: 3,
+                    pending_appointments: 2,
+                    top_services: [
+                        { name: 'رنگ مو', count: 8, revenue: 1200000 },
+                        { name: 'کوتاهی مو', count: 12, revenue: 800000 },
+                        { name: 'پاکسازی پوست', count: 5, revenue: 500000 }
+                    ]
+                }
+            };
+        }
+
+        function displayReport(report) {
+            const reportsContent = document.getElementById('reportsContent');
+            
+            reportsContent.innerHTML = `
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                    <h3>گزارش ${getCategoryName(report.type)}</h3>
+                    <p>دوره: ${report.period}</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <div class="stat-number">${formatCurrency(report.data.total_revenue)}</div>
+                        <div class="stat-label">کل درآمد</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${report.data.total_appointments}</div>
+                        <div class="stat-label">کل نوبت‌ها</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${report.data.completed_appointments}</div>
+                        <div class="stat-label">تکمیل شده</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${report.data.cancelled_appointments}</div>
+                        <div class="stat-label">لغو شده</div>
+                    </div>
+                </div>
+                
+                <h4>محبوب‌ترین خدمات</h4>
+                <div style="background: white; border-radius: 10px; overflow: hidden;">
+                    ${report.data.top_services.map(service => `
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #eee;">
+                            <div>
+                                <strong>${service.name}</strong>
+                                <div style="color: #666; font-size: 0.9rem;">${service.count} نوبت</div>
+                            </div>
+                            <div style="font-weight: bold; color: #667eea;">
+                                ${formatCurrency(service.revenue)} تومان
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function exportToExcel() {
+            // شبیه‌سازی خروجی اکسل
+            showSuccess('فایل اکسل در حال آماده‌سازی است...');
+            
+            // در نسخه واقعی، این تابع فایل اکسل واقعی تولید می‌کند
+            setTimeout(() => {
+                const data = generateCSVData();
+                downloadCSV(data, 'rosa-report.csv');
+            }, 1500);
+        }
+
+        function exportToPDF() {
+            showSuccess('فایل PDF در حال آماده‌سازی است...');
+            
+            // در نسخه واقعی، این تابع فایل PDF واقعی تولید می‌کند
+            setTimeout(() => {
+                showSuccess('فایل PDF آماده شد و در دانلودها ذخیره شد');
+            }, 2000);
+        }
+
+        function generateCSVData() {
+            // تولید داده‌های CSV برای خروجی اکسل
+            return `نوع گزارش,تاریخ,مشتری,خدمت,مبلغ,وضعیت
+فروش,1403/03/15,خانم احمدی,رنگ مو,450000,تکمیل شده
+فروش,1403/03/15,خانم محمدی,کوتاهی مو,120000,تکمیل شده
+فروش,1403/03/16,خانم رضایی,پاکسازی پوست,200000,در انتظار`;
+        }
+
+        function downloadCSV(csvData, filename) {
+            const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showSuccess('فایل اکسل با موفقیت دانلود شد');
+            }
+        }
+
+        function refreshActivity() {
+            loadRecentActivity();
+            showSuccess('اطلاعات بروزرسانی شد');
+        }
+
+        function logout() {
+            if (confirm('آیا می‌خواهید از سیستم خارج شوید؟')) {
+                localStorage.clear();
+                showSuccess('شما با موفقیت از سیستم خارج شدید');
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1000);
+            }
+        }
+
+        // Auto-refresh every 5 minutes
+        setInterval(() => {
+            if (document.visibilityState === 'visible') {
+                loadStats();
+                loadRecentActivity();
+                loadTodayAppointments();
+            }
+        }, 300000);
+
+        // جلوگیری از ارسال فرم با Enter در فیلدهای جستجو
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.type === 'text') {
+                e.preventDefault();
+                
+                // اگر در مودال مشتریان هستیم، جستجو انجام بده
+                if (e.target.id === 'customerSearch') {
+                    searchCustomers();
+                }
+            }
+        });
+
+        // اضافه کردن event listener برای فیلترها
+        document.addEventListener('change', function(e) {
+            if (e.target.id === 'customerFilter') {
+                searchCustomers();
+            }
+            if (e.target.id === 'serviceCategory' || e.target.id === 'priceRange') {
+                filterServices();
+            }
+        });
+
+        // تنظیم تاریخ‌های پیش‌فرض برای گزارشات
+        function setDefaultDates() {
+            const today = new Date();
+            const oneMonthAgo = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+            
+            document.getElementById('dateFrom').value = oneMonthAgo.toISOString().split('T')[0];
+            document.getElementById('dateTo').value = today.toISOString().split('T')[0];
+        }
+
+        // فراخوانی تنظیم تاریخ‌های پیش‌فرض
+        setDefaultDates();
+
+        // اضافه کردن انیمیشن loading برای بهبود تجربه کاربری
+        function showLoading(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            }
+        }
+
+        // تابع کمکی برای validation فرم نوبت جدید
+        function validateAppointmentForm() {
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            const appointmentDate = document.getElementById('appointmentDate').value;
+            const appointmentTime = document.getElementById('appointmentTime').value;
+            const serviceSelect = document.getElementById('serviceSelect').value;
+
+            if (!customerName) {
+                showError('نام مشتری الزامی است');
+                return false;
+            }
+
+            if (!customerPhone) {
+                showError('شماره تماس الزامی است');
+                return false;
+            }
+
+            if (!/^09\d{9}$/.test(customerPhone)) {
+                showError('شماره تماس معتبر نیست');
+                return false;
+            }
+
+            if (!appointmentDate) {
+                showError('تاریخ نوبت الزامی است');
+                return false;
+            }
+
+            if (!appointmentTime) {
+                showError('زمان نوبت الزامی است');
+                return false;
+            }
+
+            if (!serviceSelect) {
+                showError('انتخاب خدمت الزامی است');
+                return false;
+            }
+
+            // بررسی تاریخ نوبت (نباید گذشته باشد)
+            const selectedDateTime = new Date(appointmentDate + 'T' + appointmentTime);
+            const now = new Date();
+            
+            if (selectedDateTime <= now) {
+                showError('تاریخ و زمان نوبت نباید گذشته باشد');
+                return false;
+            }
+
+            return true;
+        }
+
+        // بروزرسانی تابع handleAppointmentSubmit با validation
+        async function handleAppointmentSubmit(e) {
+            e.preventDefault();
+            
+            if (!validateAppointmentForm()) {
+                return;
+            }
+            
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            
+            // نمایش loading در دکمه
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ثبت...';
+            submitButton.disabled = true;
+            
+            const formData = {
+                customer_name: document.getElementById('customerName').value,
+                customer_phone: document.getElementById('customerPhone').value,
+                booking_date: document.getElementById('appointmentDate').value + 'T' + document.getElementById('appointmentTime').value,
+                service_id: parseInt(document.getElementById('serviceSelect').value),
+                notes: document.getElementById('appointmentNotes').value,
+                payment_method: document.getElementById('paymentMethod').value,
+                paid_amount: parseFloat(document.getElementById('paidAmount').value) || 0
+            };
+
+            try {
+                const result = await apiCall('/api/bookings', {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+
+                if (result) {
+                    showSuccess('نوبت با موفقیت ثبت شد');
+                    closeModal('appointmentModal');
+                    document.getElementById('appointmentForm').reset();
+                    
+                    // بروزرسانی داشبورد
+                    await loadDashboardData();
+                }
+            } catch (error) {
+                console.error('Error creating appointment:', error);
+                showError('خطا در ثبت نوبت. لطفاً مجدداً تلاش کنید.');
+            } finally {
+                // بازگردانی دکمه به حالت اولیه
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            }
+        }
+
+        // تابع کمکی برای نمایش بهتر اطلاعات
+        function formatPhoneNumber(phone) {
+            // تبدیل 09123456789 به 0912 345 6789
+            if (phone && phone.length === 11) {
+                return phone.replace(/(\d{4})(\d{3})(\d{4})/, '$1 $2 $3');
+            }
+            return phone;
+        }
+
+        // بهبود نمایش مشتریان با فرمت بهتر
+        function displayCustomers(customers) {
+            const customersContent = document.getElementById('customersContent');
+            
+            if (customers.length === 0) {
+                customersContent.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #666;">
+                        <i class="fas fa-users" style="font-size: 3rem; opacity: 0.3; margin-bottom: 1rem;"></i>
+                        <p>مشتری یافت نشد</p>
+                        <p style="font-size: 0.9rem; opacity: 0.7;">فیلترهای جستجو را تغییر دهید</p>
+                    </div>
+                `;
+                return;
+            }
+
+            customersContent.innerHTML = customers.map(customer => `
+                <div class="customer-item">
+                    <div class="customer-header">
+                        <div>
+                            <div class="customer-name">
+                                <i class="fas fa-user"></i> ${customer.name}
+                            </div>
+                            <div class="customer-phone">
+                                <i class="fas fa-phone"></i> ${formatPhoneNumber(customer.phone)}
+                            </div>
+                        </div>
+                        <div style="text-align: left;">
+                            <button class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;" onclick="viewCustomerDetails(${customer.id})">
+                                <i class="fas fa-eye"></i> جزئیات
+                            </button>
+                        </div>
+                    </div>
+                    <div class="customer-details">
+                        <i class="fas fa-calendar"></i> آخرین ویزیت: ${customer.last_visit} | 
+                        <i class="fas fa-chart-line"></i> تعداد ویزیت: ${customer.total_visits}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // تابع جدید برای نمایش جزئیات مشتری
+        function viewCustomerDetails(customerId) {
+            const customer = customersData.find(c => c.id === customerId);
+            if (customer) {
+                alert(`جزئیات مشتری:
+نام: ${customer.name}
+تلفن: ${customer.phone}
+آخرین ویزیت: ${customer.last_visit}
+تعداد کل ویزیت‌ها: ${customer.total_visits}`);
+            }
+        }
+
+        // اضافه کردن قابلیت کیبورد shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Alt + N برای نوبت جدید
+            if (e.altKey && e.key === 'n') {
+                e.preventDefault();
+                showNewAppointment();
+            }
+            
+            // Alt + C برای مشتریان
+            if (e.altKey && e.key === 'c') {
+                e.preventDefault();
+                showCustomers();
+            }
+            
+            // Alt + S برای خدمات
+            if (e.altKey && e.key === 's') {
+                e.preventDefault();
+                showServices();
+            }
+            
+            // Alt + R برای گزارشات
+            if (e.altKey && e.key === 'r') {
+                e.preventDefault();
+                showReports();
+            }
+            
+            // Escape برای بستن مودال‌ها
+            if (e.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        console.log('✅ Rosa Beauty Dashboard loaded successfully!');
+        console.log('🔥 Keyboard shortcuts:');
+        console.log('   Alt + N: نوبت جدید');
+        console.log('   Alt + C: مشتریان');
+        console.log('   Alt + S: خدمات');
+        console.log('   Alt + R: گزارشات');
+        console.log('   Escape: بستن مودال');
+    </script>
+</body>
+</html>

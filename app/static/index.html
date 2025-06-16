@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🌹 Rosa - ثبت نام و ورود سالن زیبایی</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 1s ease-out;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .initial-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            animation: slideInUp 1s ease-out 0.5s both;
+        }
+
+        .initial-buttons.hidden {
+            display: none;
+        }
+
+        .main-btn {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 20px;
+            padding: 25px 35px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            min-width: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, #ff6b95, #d63384);
+            color: white;
+            border: none;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-top: 30px;
+            animation: slideInUp 0.8s ease-out;
+            display: none;
+        }
+
+        .form-container.show {
+            display: block;
+        }
+
+        .form-container h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            background: rgba(108, 117, 125, 0.8);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(108, 117, 125, 1);
+            transform: translateX(5px);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .form-group i {
+            position: absolute;
+            right: 18px;
+            top: 42px;
+            color: #ff6b95;
+            z-index: 2;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+            direction: rtl;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b95;
+            box-shadow: 0 0 0 3px rgba(255, 107, 149, 0.15);
+            background: rgba(255,255,255,1);
+            transform: scale(1.02);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn-register {
+            background: linear-gradient(135deg, #ff6b95, #d63384);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 149, 0.3);
+        }
+
+        .submit-btn-login {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .submit-btn.loading {
+            pointer-events: none;
+        }
+
+        .submit-btn.loading .btn-text {
+            opacity: 0;
+        }
+
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border: 3px solid transparent;
+            border-top: 3px solid white;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .message {
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .message.success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .message.error {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+            box-shadow: 0 8px 25px rgba(244, 67, 54, 0.3);
+        }
+
+        .admin-secret {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .admin-secret.visible {
+            opacity: 0.3;
+        }
+
+        .admin-secret:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .admin-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .admin-modal.show {
+            display: flex;
+        }
+
+        .admin-modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        .admin-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .initial-buttons { flex-direction: column; gap: 20px; }
+            .main-btn { min-width: auto; width: 100%; }
+            .container { padding: 15px; }
+            .form-container { padding: 25px; }
+            .header h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="logo">🌹 Rosa</h1>
+            <p>پلتفرم هوشمند مدیریت سالن‌های زیبایی</p>
+        </div>
+
+        <div id="initial-buttons" class="initial-buttons">
+            <button id="show-register" class="main-btn btn-register">
+                <i class="fas fa-user-plus" style="margin-left: 10px;"></i>
+                ثبت‌نام سالن
+            </button>
+            <button id="show-login" class="main-btn btn-login">
+                <i class="fas fa-sign-in-alt" style="margin-left: 10px;"></i>
+                ورود به حساب
+            </button>
+        </div>
+
+        <div id="register-form-container" class="form-container">
+            <button class="back-btn" id="back-from-register">
+                <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                بازگشت
+            </button>
+            <h2><i class="fas fa-store" style="margin-left: 10px; color: #ff6b95;"></i>ثبت نام سالن زیبایی</h2>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>نام کاربری</label>
+                    <input type="text" name="username" required />
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="form-group">
+                    <label>رمز عبور</label>
+                    <input type="password" name="password" required />
+                    <i class="fas fa-lock"></i>
+                </div>
+
+                <div class="form-group">
+                    <label>نام سالن</label>
+                    <input type="text" name="name" required />
+                    <i class="fas fa-store"></i>
+                </div>
+
+                <div class="form-group">
+                    <label>آدرس سالن</label>
+                    <input type="text" name="address" />
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+
+                <div class="form-group">
+                    <label>شماره تلفن</label>
+                    <input type="text" name="phone" />
+                    <i class="fas fa-phone"></i>
+                </div>
+
+                <div class="form-group">
+                    <label>صفحه اینستاگرام</label>
+                    <input type="text" name="instagram" placeholder="@salon_name" />
+                    <i class="fab fa-instagram"></i>
+                </div>
+
+                <div class="form-group">
+                    <label>توضیحات سالن</label>
+                    <textarea name="description" placeholder="درباره سالن زیبایی خود و خدماتتان بنویسید..."></textarea>
+                    <i class="fas fa-align-right"></i>
+                </div>
+
+                <button type="submit" class="submit-btn submit-btn-register">
+                    <span class="btn-text">
+                        <i class="fas fa-check" style="margin-left: 8px;"></i>
+                        ثبت نام سالن
+                    </span>
+                </button>
+            </form>
+
+            <div class="message" id="registerMessage"></div>
+        </div>
+
+        <div id="login-form-container" class="form-container">
+            <button class="back-btn" id="back-from-login">
+                <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                بازگشت
+            </button>
+            <h2><i class="fas fa-sign-in-alt" style="margin-left: 10px; color: #667eea;"></i>ورود به حساب</h2>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>نام کاربری</label>
+                    <input type="text" name="username" required />
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="form-group">
+                    <label>رمز عبور</label>
+                    <input type="password" name="password" required />
+                    <i class="fas fa-lock"></i>
+                </div>
+
+                <button type="submit" class="submit-btn submit-btn-login">
+                    <span class="btn-text">
+                        <i class="fas fa-sign-in-alt" style="margin-left: 8px;"></i>
+                        ورود به حساب
+                    </span>
+                </button>
+            </form>
+
+            <div class="message" id="loginMessage"></div>
+        </div>
+    </div>
+
+    <button id="admin-secret" class="admin-secret">
+        <i class="fas fa-crown"></i>
+    </button>
+
+    <div id="admin-modal" class="admin-modal">
+        <div class="admin-modal-content">
+            <button class="admin-close" id="admin-close">&times;</button>
+            <h3 style="color: #2c3e50; margin-bottom: 20px; text-align: center;">
+                <i class="fas fa-shield-alt" style="margin-left: 8px;"></i>
+                ورود ادمین
+            </h3>
+            <form id="adminForm">
+                <div class="form-group">
+                    <label>کد ادمین</label>
+                    <input type="password" name="admin_code" required placeholder="کد مخفی ادمین" />
+                    <i class="fas fa-key"></i>
+                </div>
+                <button type="submit" class="submit-btn" style="background: linear-gradient(135deg, #2c3e50, #34495e);">
+                    <span class="btn-text">ورود به پنل ادمین</span>
+                </button>
+            </form>
+            <div class="message" id="adminMessage"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '';
+
+        function showRegisterForm() {
+            document.getElementById('initial-buttons').classList.add('hidden');
+            document.getElementById('register-form-container').classList.add('show');
+            document.getElementById('login-form-container').classList.remove('show');
+        }
+
+        function showLoginForm() {
+            document.getElementById('initial-buttons').classList.add('hidden');
+            document.getElementById('login-form-container').classList.add('show');
+            document.getElementById('register-form-container').classList.remove('show');
+        }
+
+        function goBack() {
+            document.getElementById('initial-buttons').classList.remove('hidden');
+            document.getElementById('register-form-container').classList.remove('show');
+            document.getElementById('login-form-container').classList.remove('show');
+            
+            document.getElementById('registerMessage').classList.remove('show');
+            document.getElementById('loginMessage').classList.remove('show');
+        }
+
+        function showMessage(elementId, message, type = 'success') {
+            const element = document.getElementById(elementId);
+            element.className = `message ${type} show`;
+            element.innerHTML = type === 'success' ? 
+                `<i class="fas fa-check-circle" style="margin-left: 8px;"></i>${message}` : 
+                `<i class="fas fa-exclamation-triangle" style="margin-left: 8px;"></i>${message}`;
+            
+            setTimeout(() => {
+                element.classList.remove('show');
+            }, 5000);
+        }
+
+        function setButtonLoading(button, loading) {
+            if (loading) {
+                button.classList.add('loading');
+            } else {
+                button.classList.remove('loading');
+            }
+        }
+
+        let clickCount = 0;
+        let clickTimer = null;
+
+        function enableAdminButton() {
+            clickCount++;
+            
+            if (clickTimer) {
+                clearTimeout(clickTimer);
+            }
+            
+            clickTimer = setTimeout(() => {
+                clickCount = 0;
+            }, 2000);
+            
+            if (clickCount >= 5) {
+                document.getElementById('admin-secret').classList.add('visible');
+                clickCount = 0;
+                
+                if (navigator.vibrate) {
+                    navigator.vibrate(200);
+                }
+            }
+        }
+
+        function showAdminModal() {
+            document.getElementById('admin-modal').classList.add('show');
+        }
+
+        function hideAdminModal() {
+            document.getElementById('admin-modal').classList.remove('show');
+            document.getElementById('adminMessage').classList.remove('show');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('show-register').addEventListener('click', showRegisterForm);
+            document.getElementById('show-login').addEventListener('click', showLoginForm);
+            
+            document.getElementById('back-from-register').addEventListener('click', goBack);
+            document.getElementById('back-from-login').addEventListener('click', goBack);
+            
+            document.getElementById('logo').addEventListener('click', enableAdminButton);
+            document.getElementById('admin-secret').addEventListener('click', showAdminModal);
+            document.getElementById('admin-close').addEventListener('click', hideAdminModal);
+            
+            document.getElementById('admin-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideAdminModal();
+                }
+            });
+
+            document.getElementById('registerForm').addEventListener('submit', handleRegisterSubmit);
+            document.getElementById('loginForm').addEventListener('submit', handleLoginSubmit);
+            document.getElementById('adminForm').addEventListener('submit', handleAdminSubmit);
+        });
+
+        async function handleRegisterSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            setButtonLoading(submitButton, true);
+
+            const data = {
+                username: form.username.value.trim(),
+                password: form.password.value,
+                name: form.name.value.trim(),
+                address: form.address.value.trim(),
+                phone: form.phone.value.trim(),
+                instagram: form.instagram.value.trim(),
+                description: form.description.value.trim(),
+            };
+
+            try {
+                const res = await fetch(`${API_BASE}/register`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data),
+                });
+
+                const resData = await res.json();
+                
+                if (res.ok) {
+                    showMessage('registerMessage', `سالن "${data.name}" با موفقیت ثبت شد! 🎉`, 'success');
+                    form.reset();
+                    
+                    setTimeout(() => {
+                        goBack();
+                    }, 2000);
+                } else {
+                    showMessage('registerMessage', `خطا در ثبت نام: ${resData.detail}`, 'error');
+                }
+            } catch (error) {
+                showMessage('registerMessage', 'خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.', 'error');
+                console.error(error);
+            } finally {
+                setButtonLoading(submitButton, false);
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            setButtonLoading(submitButton, true);
+
+            const data = new URLSearchParams();
+            data.append('username', form.username.value.trim());
+            data.append('password', form.password.value);
+
+            try {
+                const res = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: data.toString(),
+                });
+
+                const resData = await res.json();
+                
+                if (res.ok) {
+                    showMessage('loginMessage', 'ورود موفقیت‌آمیز! 🎊 در حال هدایت...', 'success');
+                    
+                    localStorage.setItem('access_token', resData.access_token);
+                    localStorage.setItem('username', form.username.value.trim());
+                    
+                    form.reset();
+                    
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 1500);
+                } else {
+                    showMessage('loginMessage', `خطا در ورود: ${resData.detail}`, 'error');
+                }
+            } catch (error) {
+                showMessage('loginMessage', 'خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.', 'error');
+                console.error(error);
+            } finally {
+                setButtonLoading(submitButton, false);
+            }
+        }
+
+        async function handleAdminSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+            const adminCode = form.admin_code.value;
+
+            setButtonLoading(submitButton, true);
+
+            try {
+                const res = await fetch(`${API_BASE}/admin/login`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ code: adminCode }),
+                });
+
+                const resData = await res.json();
+                
+                if (res.ok) {
+                    showMessage('adminMessage', 'ورود ادمین موفق! 👑', 'success');
+                    
+                    localStorage.setItem('isAdmin', 'true');
+                    localStorage.setItem('admin_token', resData.access_token);
+                    localStorage.setItem('adminLoginTime', new Date().toISOString());
+                    
+                    setTimeout(() => {
+                        hideAdminModal();
+                        window.location.href = '/admin';
+                    }, 1500);
+                } else {
+                    showMessage('adminMessage', `خطا در ورود ادمین: ${resData.detail}`, 'error');
+                }
+            } catch (error) {
+                showMessage('adminMessage', 'خطا در ارتباط با سرور ادمین', 'error');
+                console.error('Admin login error:', error);
+            } finally {
+                setButtonLoading(submitButton, false);
+            }
+        }
+    </script>
+</body>
+</html>
